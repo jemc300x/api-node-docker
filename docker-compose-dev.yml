@@ -1,0 +1,25 @@
+version: '4.10.1'
+services:
+  miapp:
+    restart: always
+    build:
+      context: .
+      dockerfile: dockerfile.dev
+    ports:
+      - "3000:3000"
+    links:
+      - mongodb
+    volumes:
+      - ./:/home/app
+  mongodb:
+    image: mongo
+    ports:
+      - "27017:27017"
+    environment:
+      - MONGO_INITDB_ROOT_USERNAME=admin
+      - MONGO_INITDB_ROOT_PASSWORD=123456
+    volumes:
+      - mongo-data:/data/db
+
+volumes:
+  mongo-data:
